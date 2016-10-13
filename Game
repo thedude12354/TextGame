@@ -1,0 +1,172 @@
+import java.util.Scanner;
+import java.io.*;
+
+//1. Create a funtional combat system.
+//2. Create Currency system and shop in first room.
+//3. Begin adventure room.
+
+public class hello {
+   
+    Scanner keyboard = new Scanner(System.in);
+    
+    public void main(){
+        String Go, Look, Pantry, Eat, Action;
+        int stats, location = 1, inventory = 1;
+        
+        int health, strength, defence = CharacterCreation(health, strength, defence);
+        
+        System.out.println("\\\\TUTORIAL START//");
+        System.out.println("You enter combat with a training dummy. You go first. ");
+        System.out.println("");
+        stats = GUI(health,strength,defence,location,inventory);
+        
+        System.out.println("In most enounters you can either Scan the enemy, Attack with an equiped weapon, or use an Item from your Inventory.");
+        System.out.println("Because you have no weapon and no Inventory items you must either Attack with your fists or Scan the enemy.");
+        System.out.println("Scanning the enemy will reveal the enemys stats. This will allow you to better exploit your ememy.");
+        System.out.println("Attacking will only work if your Strength is higher than the enemys Defence. If not the Defence of the enemy will be reduced by the attack of your weapon.");
+        
+        Enemy_Tutorial();
+        Clear();
+        
+        System.out.print("Congradulations, you completed the tutorial!");
+        System.out.println("\\\\TUTORIAL FINISH//");
+        
+        Go = keyboard.next();
+        if (Go.equalsIgnoreCase("kitchen")) {
+            System.out.println("There is a long countertop with dirty dishes everywhere. Off to one side there is, as you'd expect, a refrigerator. You may open the 'refrigerator' or look in the 'pantry'. ");
+            System.out.print(">  ");
+            Look = keyboard.next();
+        
+            if (Look.equalsIgnoreCase("refrigerator")) {
+                System.out.println("Inside the refrigerator you see food and stuff. It looks pretty nasty. Would you like to eat some of the food, 'Yes' or 'No'?");
+                System.out.print(">  ");
+                Eat = keyboard.next();
+        
+                if (Eat.equalsIgnoreCase("Yes")) {
+                    System.out.println("  ");
+                    System.out.println("You live!");
+                } else if (Eat.equalsIgnoreCase("No")) {
+                    System.out.println("  ");
+                    System.out.println("You die of starvation!");
+                }
+            } else if (Look.equalsIgnoreCase("pantry")) {
+                System.out.println("There is a killer inside. Do you want to 'fight' them, or 'run away'?");
+                System.out.print(">  ");
+                Pantry = keyboard.next();
+        
+                if (Pantry.equalsIgnoreCase("fight")) {
+                    System.out.println("  ");
+                    System.out.println("You're weak and die");
+                } else if (Pantry.equalsIgnoreCase("run away")) {
+                    System.out.println("  ");
+                    System.out.println("You died because your too slow & can't run");
+                }
+            }
+        }
+        else 
+            System.out.print("You fall in a pit and die");
+    }
+
+
+    
+    public int[] CharacterCreation(int health,int strength,int defence)
+    {
+        int points = 20;
+       
+        System.out.println(" WELCOME TO MY TINY ADVENTURE");
+        System.out.println("  ");
+        System.out.println("Time to create a Character. You get 20 points to put into Health, Strength, and Defence. ");
+        System.out.println("How many would you like to put into Health? ");
+        System.out.print("> ");
+        health = keyboard.nextInt();
+        
+        while (health > 18) 
+        {
+            System.out.print("Please enter a number that is less than 18");
+            System.out.print("> ");
+            health = keyboard.nextInt();
+        }
+        
+        points = points - health;
+        System.out.println("How many points would you like to put into Strength? You have " + points + " remaining. ");
+        System.out.print("> ");
+        strength = keyboard.nextInt();
+        
+        while (strength > points)
+        {
+            System.out.print("Please enter a number that is less than " + points);
+            System.out.print("> ");
+            strength = keyboard.nextInt(); 
+        }
+        
+        points = points - strength;
+        System.out.println("You put your remaining " + points + " point(s) into Defence");
+        defence = points;
+        
+        
+        Clear();
+        
+        System.out.println("Your characters stats are Health: " + health + " Strength: " + strength + " and Defence: " + defence);
+        int[] stats = {health, strength, defence};
+        return stats;
+    }
+
+
+    
+    public static int GUI(int health,int strength,int defence, int location, int inventory)
+    {
+        System.out.println("Health: "+ health + "  Strength: "+ strength + "  Defence: " + defence);
+        if (location == 1)
+            System.out.println("Location: Start");
+        else
+            System.out.println("Location: Else");
+        if (inventory == 1)
+            System.out.println("Inventory: Empty");
+            System.out.println("");
+        return 1;
+    }
+    
+
+
+
+    public static int Clear()
+    {
+        for (int i = 1; i < 50; i++)
+        System.out.println("");
+        return 1;
+    }
+
+
+
+
+    public void Enemy_Tutorial()
+    {
+        int health = 5, strength = 0, defence = 1;
+        String Action;
+        while(health > 0)
+        {
+            System.out.println("What would you like to do?");
+            System.out.print("> ");
+            Action = keyboard.next();
+            if (Action.equalsIgnoreCase("scan")) 
+            {
+                System.out.println("");
+                System.out.println("You Scanned. The dummys stats are Health: "+health+ " Strength: "+strength+" Defence: "+defence);
+            }
+            else if (Action.equalsIgnoreCase("attack")) 
+            {
+                System.out.println("");
+                System.out.println("You Attacked with your Fists.");
+                System.out.println("Because your Attack is higher than the dummys Defence you hit!.");
+                System.out.println("Your fists hit for 1 dammage");
+                System.out.println("");
+                health = health - 1;
+            }
+            else
+            {
+                System.out.println("Parton?");
+            }
+        }
+    }
+
+}
